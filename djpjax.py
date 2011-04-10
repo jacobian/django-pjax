@@ -3,7 +3,7 @@ import functools
 def pjax(pjax_template=None):
     def pjax_decorator(view):
         @functools.wraps(view)
-        def _inner(request, *args, **kwargs):
+        def _view(request, *args, **kwargs):
             resp = view(request, *args, **kwargs)
             # this is lame. what else though?
             # if not hasattr(resp, "is_rendered"):
@@ -13,7 +13,7 @@ def pjax(pjax_template=None):
                 if pjax_template:
                     resp.template_name = pjax_template
                 elif "." in resp.template_name:
-                    resp.template_name = "%s-pjax.%s" % resp.template_name.rsplit('.', 1)
+                    resp.template_name = "%s-pjax.%s" % tuple(resp.template_name.rsplit('.', 1))
                 else:
                     resp.template_name += "-pjax"
             return resp
