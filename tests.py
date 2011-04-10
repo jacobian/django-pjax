@@ -1,7 +1,6 @@
 # Django bootstrap, sigh.
 from django.conf import settings; settings.configure()
 
-import mock
 import djpjax
 from django.template.response import TemplateResponse
 from django.test.client import RequestFactory
