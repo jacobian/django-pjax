@@ -57,4 +57,20 @@ the decorator::
     def my_view(request):
         return TemplateResponse(request, "template.html", {'my': 'context'})
 
+If you'd like to use Django 1.3's class-based views instead, a PJAX Mixin class
+is provided as well. Simply use ``PJAXResponseMixin`` where you would normally have
+used ``TemplateResponseMixin``, and your ``template_name`` will be treated the same
+way as above. You can alternately provide a ``pjax_template_name`` class variable
+if you want a specific template used for PJAX responses::
+
+    from django.views.generic import View
+    from djpjax import PJAXResponseMixin
+
+    class MyView(PJAXResponseMixin, View):
+        template_name = "template.html"
+        pjax_template_name = "pjax.html"
+
+        def get(self, request):
+            return self.render_to_response({'my': 'context'})
+
 That's it!
