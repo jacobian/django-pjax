@@ -32,6 +32,12 @@ def test_view_with_pjax_template():
     resp = view_with_pjax_template(pjax_request)
     assert resp.template_name == "pjax.html"
 
+def test_view_with_template_tuple():
+    resp = view_with_template_tuple(regular_request)
+    assert resp.template_name == ("template.html", "other_template.html")
+    resp = view_with_template_tuple(pjax_request)
+    assert resp.template_name == ("template-pjax.html", "other_template-pjax.html")
+
 def test_class_pjax_sans_template():
     view = NoPJAXTemplateVew.as_view()
     resp = view(regular_request)
@@ -66,6 +72,10 @@ def view_with_silly_template(request):
 @djpjax.pjax("pjax.html")
 def view_with_pjax_template(request):
     return TemplateResponse(request, "template.html", {})
+
+@djpjax.pjax()
+def view_with_template_tuple(request):
+    return TemplateResponse(request, ("template.html", "other_template.html"), {})
 
 class NoPJAXTemplateVew(djpjax.PJAXResponseMixin, View):
     template_name = 'template.html'

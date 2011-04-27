@@ -15,7 +15,7 @@ def pjax(pjax_template=None):
                 if pjax_template:
                     resp.template_name = pjax_template
                 else:
-                    resp.template_name = _pjaxify_template_name(resp.template_name)
+                    resp.template_name = _pjaxify_template_var(resp.template_name)
             return resp
         return _view
     return pjax_decorator
@@ -31,8 +31,16 @@ class PJAXResponseMixin(TemplateResponseMixin):
             if self.pjax_template_name:
                 names = [self.pjax_template_name]
             else:
-                names = [_pjaxify_template_name(name) for name in names]
+                names = _pjaxify_template_var(names)
         return names
+
+
+def _pjaxify_template_var(template_var):
+    if isinstance(template_var, (list, tuple)):
+        template_var = type(template_var)(_pjaxify_template_name(name) for name in template_var)
+    elif isinstance(template_var, basestring):
+        template_var = _pjaxify_template_name(template_var)
+    return template_var
 
 
 def _pjaxify_template_name(name):
