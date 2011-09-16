@@ -26,7 +26,7 @@ Usage
 
 First, read about `how to use jQuery-PJAX`__ and pick one of the techniques there.
 
-__ https://github.com/defunkt/jquery-pjax/blob/master/README
+__ https://github.com/defunkt/jquery-pjax
 
 Next, make sure the views you're PJAXing are using TemplateResponse__. You can't use Django-PJAX with a normal ``HttpResponse``; only ``TemplateResponse``. Decorate these views with the ``pjax`` decorator::
 
