@@ -9,18 +9,18 @@ def read(fname):
 
 setup(
     name = 'django-pjax',
-    version = '1.0',
+    version = '1.1',
     description = 'A Django helper for jQuery-PJAX.',
     license = 'BSD',
     long_description = read('README.rst'),
     url = 'https://github.com/jacobian/django-pjax',
-    
+
     author = 'Jacob Kaplan-Moss',
     author_email = 'jacob@jacobian.org',
-    
+
     py_modules =  ['djpjax'],
     install_requires = ['django>=1.3'],
-    
+
     classifiers = (
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
