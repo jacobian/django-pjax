@@ -78,7 +78,7 @@ That's it!
 Using Template Extensions
 -------------------------
 
-If the content in your ``template-pjax.html`` file is very similar to your ``template.html`` an alternative method of operation is to use the decorator ``pjaxtend``, as follows:
+If the content in your ``template-pjax.html`` file is very similar to your ``template.html`` an alternative method of operation is to use the decorator ``pjaxtend``, as follows::
 
     from djpjax import pjaxtend
     
@@ -86,15 +86,15 @@ If the content in your ``template-pjax.html`` file is very similar to your ``tem
     def my_view(request):
         return TemplateResponse(request, "template.html", {'my': 'context'})
 
-Then, in your ``template.html`` file you can do the following:
+Then, in your ``template.html`` file you can do the following::
 
     {% extends extend %}
     ...
     ...
+
+Note that the template will extend ``someapp/base.html`` unless its a pjax request in which case it will extend ``pjax.html``.
  
- Note that the template will extend ``someapp/base.html`` unless its a pjax request in which case it will extend ``pjax.html``.
- 
- If you want to define which template to extend for a pjax request you can do so as follows:
+If you want to define which template to extend for a pjax request you can do so as follows::
  
     from djpjax import pjaxtend
     
