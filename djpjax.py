@@ -20,7 +20,7 @@ def pjax(pjax_template=None):
         return _view
     return pjax_decorator
 
-def pjaxtend(extend, pjax_extend='pjax.html'):
+def pjaxtend(parent, pjax_parent='pjax.html'):
     def pjaxtend_decorator(view):
         @functools.wraps(view)
         def _view(request, *args, **kwargs):
@@ -30,9 +30,9 @@ def pjaxtend(extend, pjax_extend='pjax.html'):
             #     warnings.warn("@pjax used with non-template-response view")
             #     return resp
             if request.META.get('HTTP_X_PJAX', False):
-                resp.context_data['extend'] = pjax_extend
-            elif extend:
-                resp.context_data['extend'] = extend
+                resp.context_data['parent'] = pjax_parent
+            elif parent:
+                resp.context_data['parent'] = parent
             return resp
         return _view
     return pjaxtend_decorator
