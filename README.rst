@@ -84,7 +84,7 @@ If the content in your ``template-pjax.html`` file is very similar to your
 
     from djpjax import pjaxtend
     
-    @pjaxtend('someapp/base.html')
+    @pjaxtend
     def my_view(request):
         return TemplateResponse(request, "template.html", {'my': 'context'})
 
@@ -94,11 +94,11 @@ Then, in your ``template.html`` file you can do the following::
     ...
     ...
 
-Note that the template will extend ``someapp/base.html`` unless its a pjax request 
+Note that the template will extend ``base.html`` unless its a pjax request 
 in which case it will extend ``pjax.html``.
  
-If you want to define which template to extend for a pjax request you can do so 
-as follows::
+If you want to define the parent for a standard http or pjax request, you can do 
+so as follows::
  
     from djpjax import pjaxtend
     
@@ -106,4 +106,31 @@ as follows::
     def my_view(request):
         return TemplateResponse(request, "template.html", {'my': 'context'})
  
- Using this approach you don't need to create many ``*-pjax.html`` files.
+Using this approach you don't need to create many ``*-pjax.html`` files.
+
+If you have a collision with the variable name ``parent`` you can specify the 
+context variable to use as the third parameter to pjaxtexd, as follows::
+
+	from djpjax import pjaxtend
+    
+    @pjaxtend('someapp/base.html', 'my-pjax-extension.html', 'my_parent')
+    def my_view(request):
+        return TemplateResponse(request, "template.html", {'my': 'context'})
+
+Which would require the following in your template:
+
+    {% extends my_parent %}
+    ...
+    ...
+
+ 
+Testing
+-------
+
+Tests are run using nosetests. To install::
+
+	pip install nose
+
+And to run the tests::
+
+	nosetests tests.py

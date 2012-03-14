@@ -58,6 +58,14 @@ def test_class_with_pjax_template():
     resp = view(pjax_request)
     assert resp.template_name[0] == "pjax.html"
 
+def test_pjaxtend_default():
+    resp = view_default_pjaxtend(regular_request)
+    assert resp.template_name == "template.html"
+    assert resp.context_data['parent'] == "base.html"
+    resp = view_default_pjaxtend(pjax_request)
+    assert resp.template_name == "template.html"
+    assert resp.context_data['parent'] == "pjax.html"
+
 def test_pjaxtend_default_parent():
     resp = view_default_parent_pjaxtend(regular_request)
     assert resp.template_name == "template.html"
@@ -74,6 +82,13 @@ def test_pjaxtend_custom_parent():
     assert resp.template_name == "template.html"
     assert resp.context_data['parent'] == "parent-pjax.html"
 
+def test_pjaxtend_custom_context():
+    resp = view_custom_context_pjaxtend(regular_request)
+    assert resp.template_name == "template.html"
+    assert resp.context_data['my_parent'] == "parent.html"
+    resp = view_custom_context_pjaxtend(pjax_request)
+    assert resp.template_name == "template.html"
+    assert resp.context_data['my_parent'] == "parent-pjax.html"
 
 # The test "views" themselves.
 
@@ -93,12 +108,20 @@ def view_with_pjax_template(request):
 def view_with_template_tuple(request):
     return TemplateResponse(request, ("template.html", "other_template.html"), {})
 
+@djpjax.pjaxtend()
+def view_default_pjaxtend(request):
+    return TemplateResponse(request, "template.html", {})
+
 @djpjax.pjaxtend('parent.html')
 def view_default_parent_pjaxtend(request):
     return TemplateResponse(request, "template.html", {})
 
 @djpjax.pjaxtend('parent.html', 'parent-pjax.html')
 def view_custom_parent_pjaxtend(request):
+    return TemplateResponse(request, "template.html", {})
+
+@djpjax.pjaxtend('parent.html', 'parent-pjax.html', 'my_parent')
+def view_custom_context_pjaxtend(request):
     return TemplateResponse(request, "template.html", {})
 
 class NoPJAXTemplateVew(djpjax.PJAXResponseMixin, View):
