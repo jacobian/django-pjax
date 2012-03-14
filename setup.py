@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name = 'django-pjax',
-    version = '1.1',
+    version = '1.2',
     description = 'A Django helper for jQuery-PJAX.',
     license = 'BSD',
     long_description = read('README.rst'),
