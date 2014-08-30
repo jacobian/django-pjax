@@ -1,6 +1,9 @@
 Django-PJAX
 ===========
 
+`This repo is archived <https://github.com/jacobian-archive/about/blob/master/README.md>`_, and will no longer be maintained.
+-----------------------------------------------------------------------------------------------------------------------------
+
 This is a Django helper for `defunkt's jquery-pjax`__. 
 
 Django-PJAX requires Django 1.3.
